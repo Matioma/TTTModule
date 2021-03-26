@@ -16,7 +16,16 @@ final int widthArea=10;
 final int heightArea=10;
 final int depthArea=10;
 
+
+
+float lastTime;
+float currentTime=0;
+float deltaTime =0;
+
 void setup() {
+  
+  
+  
   size(512, 512, P3D);
   
   for(int i=0; i< numberOfObjects; i++){
@@ -30,10 +39,18 @@ void setup() {
   cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(50);
   cam.setMaximumDistance(5000);
+  
+  
+  lastTime=millis();
 }
 
 void draw() {
+  
   background(0);
+  cam.beginHUD();
+  textSize(32);
+  text("FPS: "+ 1/(deltaTime/1000) , 10, 30); 
+  cam.endHUD();
   lights();
   
   DetectCollision();
@@ -43,13 +60,17 @@ void draw() {
   collisionsCount=0;
   
 
-  
-  
-  
   for(int i=0; i< objects.size();i++){
     objects.get(i).Update();
     objects.get(i).Draw();
   }
+  
+  //currentTime = millis();
+  deltaTime = millis()-lastTime;
+  //textSize(32);
+  //text("FPS: "+ 1/(deltaTime/1000) , 10, 30); 
+  //println(deltaTime);
+  lastTime = millis();
 }
 
 
