@@ -36,7 +36,7 @@ class Object{
     rotateZ(rotation.z);
     
     noStroke();
-    shape(meshToDraw);
+    if(seeMeshes) shape(meshToDraw);
     
     if(collider !=null) collider.Draw();
   
