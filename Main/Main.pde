@@ -1,63 +1,14 @@
 import peasy.*;
 
-
-
-//ArrayList<Entity> entities = new ArrayList<Entity>();
-
-//PShape usedShape;
-
-
-
-
-//void setup() {
-//  size(1280, 640, P3D);
-//  cam = new PeasyCam(this, 1000);
-//  cam.setMinimumDistance(50);
-//  cam.setMaximumDistance(5000);
-  
-//  Mesh usedMesh = new Mesh();
-//  Collider collider = new SphereCollider();
-  
-//  entities.add(createNewEntity(usedMesh,collider));  
-//}
-
-//void draw() {
-
-//  background(0);
-//  lights();
-//  for(int i =0; i< entities.size(); i++){
-//    entities.get(i).Update();
-//    entities.get(i).Draw();
-//  }  
-//}
-
-
-//Entity createNewEntity(Mesh m , Collider col){
-//  Entity obj = new Entity(m,col);
-//  //obj.transform.position = new PVector(0,0,0);
-  
-//  return obj;
-//}
-
-
-
-//void keyReleased() {
-//   if (key == 'd' || key == 'D') {
-//     ToggleDebugMode();
-//   }
-//}
-
-
-//void ToggleDebugMode(){
-//  debugMode = !debugMode;
-//}
-
 PeasyCam cam;
 
 ArrayList<Object> objects = new ArrayList<Object>();
 ArrayList<CollisionInfo> collisions = new ArrayList<CollisionInfo>();
 
 static boolean debugMode=false;
+static boolean seeMeshes =true;
+
+int collisionsCount =0;
 
 final int numberOfObjects =500;
 
@@ -65,10 +16,8 @@ final int widthArea=10;
 final int heightArea=10;
 final int depthArea=10;
 
-
 void setup() {
   size(512, 512, P3D);
-  
   
   for(int i=0; i< numberOfObjects; i++){
       float x = random(-widthArea/2,widthArea/2);
@@ -88,7 +37,12 @@ void draw() {
   lights();
   
   DetectCollision();
-  ResolveCollision();
+  if(collisionsCount!=0){
+      println(collisionsCount);
+  }
+  collisionsCount=0;
+  
+
   
   
   
@@ -121,7 +75,7 @@ void DetectCollision(){
        if(differenceVector.mag()<= collider1Radius+collider2Radius){
          //println(differenceVector.mag() + ":" + collider1Radius+collider2Radius);
          
-         
+         collisionsCount++;
          differenceVector.normalize().mult(1);
          ResolveCollision(new CollisionInfo(differenceVector,objects.get(i).collider,objects.get(j).collider));
          //ResolveCollision(differenceVector,objects.get(i).collider,objects.get(j).collider);
@@ -141,9 +95,9 @@ void ResolveCollision(){
 }
 
 void ResolveCollision(CollisionInfo collision){
-    collision.col1.owner.velocity.sub(collision.normal);
+    collision.col1.owner.velocity.sub(collision.normal.mult(0.1));
     collision.col1.owner.Update();
-    collision.col2.owner.velocity.add(collision.normal);
+    collision.col2.owner.velocity.add(collision.normal.mult(0.1));
     collision.col2.owner.Update();
 }
 
@@ -152,9 +106,16 @@ void keyReleased() {
    if (key == 'd' || key == 'D') {
      ToggleDebugMode();
    }
+   if (key == 's' || key == 'S') {
+     ToggleVisibleMesh();
+   }
 }
 
 
 void ToggleDebugMode(){
   debugMode = !debugMode;
+}
+
+void ToggleVisibleMesh(){
+  seeMeshes = !seeMeshes;
 }
