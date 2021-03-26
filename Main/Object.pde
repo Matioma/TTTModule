@@ -2,6 +2,8 @@ class Object{
   PShape meshToDraw;
   Collider collider;
   
+  PVector position;
+  
   Object(){ }
   
   void AddMesh(PShape shape){
@@ -11,12 +13,9 @@ class Object{
   void AddCollider(Collider collider){
     this.collider = collider;
   }
-  
-  
-  
-  
-  
+ 
   void Update(){
+    
   }
   
   
@@ -26,13 +25,7 @@ class Object{
     noStroke();
     shape(meshToDraw);
     meshToDraw.rotateY(.01);
-    drawCollider();
-  }
-
-
-  void drawCollider(){
-    noFill();
-    stroke(127,0,0);
-    sphere(1);
+    
+    if(collider !=null) collider.Draw();
   }
 }

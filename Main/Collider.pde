@@ -1,8 +1,14 @@
 class Collider{
-    
-  void Update(){
+  Object owner; 
   
+  Collider(Object owner){
+    this.owner = owner;
   }
+  
+  void Update(){
+
+  }
+  
   void Draw(){
     noFill();
     stroke(127,0,0);

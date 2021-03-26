@@ -54,18 +54,15 @@ import peasy.*;
 
 PeasyCam cam;
 
-//PShape pieta;
-
 static boolean debugMode=true;
 Object obj;
-
 
 void setup() {
   size(512, 512, P3D);
   
   obj = new Object();
   obj.AddMesh(loadShape("Resources/Pyramid.obj"));
-  obj.AddCollider(new Collider());
+  obj.AddCollider(new Collider(obj));
   
   cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(50);
@@ -78,7 +75,4 @@ void draw() {
   
   obj.Update();
   obj.Draw();
-  //camera(0, 0, height * .86602:
-  // 0, 0, 0,
-  //  0, 1, 0);
 }
