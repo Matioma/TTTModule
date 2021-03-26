@@ -53,11 +53,13 @@ import peasy.*;
 //}
 
 PeasyCam cam;
-static boolean debugMode=true;
+
 ArrayList<Object> objects = new ArrayList<Object>();
+ArrayList<CollisionInfo> collisions = new ArrayList<CollisionInfo>();
 
+static boolean debugMode=false;
 
-final int numberOfObjects =100;
+final int numberOfObjects =500;
 
 final int widthArea=10;
 final int heightArea=10;
@@ -85,6 +87,11 @@ void draw() {
   background(0);
   lights();
   
+  DetectCollision();
+  ResolveCollision();
+  
+  
+  
   for(int i=0; i< objects.size();i++){
     objects.get(i).Update();
     objects.get(i).Draw();
@@ -98,4 +105,56 @@ void AddObjectToScene(PVector position){
   obj.AddCollider(new Collider(obj));
   obj.SetPosition(position);
   objects.add(obj);
+}
+
+
+void DetectCollision(){
+  for(int i=0; i< objects.size()-1;i++){
+    for(int j=i+1; j<objects.size(); j++){
+       PVector colliderPos1 = objects.get(i).position.copy();
+       PVector colliderPos2 = objects.get(j).position.copy();
+       
+       PVector differenceVector= colliderPos2.sub(colliderPos1);
+       float collider1Radius = objects.get(i).collider.radius;
+       float collider2Radius = objects.get(j).collider.radius;
+       
+       if(differenceVector.mag()<= collider1Radius+collider2Radius){
+         //println(differenceVector.mag() + ":" + collider1Radius+collider2Radius);
+         
+         
+         differenceVector.normalize().mult(1);
+         ResolveCollision(new CollisionInfo(differenceVector,objects.get(i).collider,objects.get(j).collider));
+         //ResolveCollision(differenceVector,objects.get(i).collider,objects.get(j).collider);
+       }
+    }
+  }
+}
+
+void ResolveCollision(){
+  for(int i=0; i< collisions.size();i++){
+    CollisionInfo info = collisions.get(i); 
+    
+    info.col1.owner.position.add(info.normal);
+    info.col2.owner.position.sub(info.normal);
+  }
+  collisions.clear();
+}
+
+void ResolveCollision(CollisionInfo collision){
+    collision.col1.owner.velocity.sub(collision.normal);
+    collision.col1.owner.Update();
+    collision.col2.owner.velocity.add(collision.normal);
+    collision.col2.owner.Update();
+}
+
+
+void keyReleased() {
+   if (key == 'd' || key == 'D') {
+     ToggleDebugMode();
+   }
+}
+
+
+void ToggleDebugMode(){
+  debugMode = !debugMode;
 }

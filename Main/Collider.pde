@@ -1,5 +1,6 @@
 class Collider{
   Object owner; 
+  float radius=1;
   
   Collider(Object owner){
     this.owner = owner;
@@ -10,8 +11,9 @@ class Collider{
   }
   
   void Draw(){
+    if(!debugMode) return;
     noFill();
     stroke(127,0,0);
-    sphere(1);
+    sphere(radius);
   }
 }

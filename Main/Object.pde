@@ -3,6 +3,7 @@ class Object{
   Collider collider;
   
   PVector position = new PVector(0,0,0);
+  PVector velocity = new PVector(0,0,0);
   
   Object(){ }
   
@@ -19,7 +20,8 @@ class Object{
   }
  
   void Update(){
-     
+     position.add(velocity);
+     velocity.mult(0);
   }
   
   void Draw(){
@@ -30,7 +32,7 @@ class Object{
     
     noStroke();
     shape(meshToDraw);
-    meshToDraw.rotateY(.01);
+    //meshToDraw.rotateY(.01);
     
     if(collider !=null) collider.Draw();
   
