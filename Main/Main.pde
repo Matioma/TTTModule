@@ -53,16 +53,28 @@ import peasy.*;
 //}
 
 PeasyCam cam;
-
 static boolean debugMode=true;
-Object obj;
+ArrayList<Object> objects = new ArrayList<Object>();
+
+
+final int numberOfObjects =100;
+
+final int widthArea=10;
+final int heightArea=10;
+final int depthArea=10;
+
 
 void setup() {
   size(512, 512, P3D);
   
-  obj = new Object();
-  obj.AddMesh(loadShape("Resources/Pyramid.obj"));
-  obj.AddCollider(new Collider(obj));
+  
+  for(int i=0; i< numberOfObjects; i++){
+      float x = random(-widthArea/2,widthArea/2);
+      float y = random(-heightArea/2,heightArea/2);
+      float z = random(-depthArea/2,depthArea/2);
+     AddObjectToScene(new PVector(x,y,z));
+  }
+ 
   
   cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(50);
@@ -73,6 +85,17 @@ void draw() {
   background(0);
   lights();
   
-  obj.Update();
-  obj.Draw();
+  for(int i=0; i< objects.size();i++){
+    objects.get(i).Update();
+    objects.get(i).Draw();
+  }
+}
+
+
+void AddObjectToScene(PVector position){
+  Object obj = new Object();
+  obj.AddMesh(loadShape("Resources/Pyramid.obj"));
+  obj.AddCollider(new Collider(obj));
+  obj.SetPosition(position);
+  objects.add(obj);
 }
