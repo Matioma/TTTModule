@@ -3,6 +3,8 @@ class Object{
   Collider collider;
   
   PVector position = new PVector(0,0,0);
+  PVector rotation = PVector.random3D();
+  
   PVector velocity = new PVector(0,0,0);
   
   Object(){ }
@@ -29,10 +31,12 @@ class Object{
     
     pushMatrix();
     translate(position.x, position.y, position.z);
+    rotateX(rotation.x);
+    rotateY(rotation.y);
+    rotateZ(rotation.z);
     
     noStroke();
     shape(meshToDraw);
-    //meshToDraw.rotateY(.01);
     
     if(collider !=null) collider.Draw();
   
