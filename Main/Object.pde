@@ -4,7 +4,6 @@ class Object{
   
   PVector position = new PVector(0,0,0);
   PVector rotation = PVector.random3D();
-  
   PVector velocity = new PVector(0,0,0);
   
   Object(){ }

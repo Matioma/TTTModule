@@ -8,7 +8,8 @@ ArrayList<CollisionInfo> collisions = new ArrayList<CollisionInfo>();
 static boolean debugMode=false;
 static boolean seeMeshes =true;
 
-int collisionsCount =0;
+static int collisionsCount =0;
+
 
 final int numberOfObjects =500;
 
@@ -45,18 +46,15 @@ void setup() {
 }
 
 void draw() {
-  
   background(0);
-  cam.beginHUD();
-  textSize(32);
-  text("FPS: "+ 1/(deltaTime/1000) , 10, 30); 
-  cam.endHUD();
+ 
   lights();
   
   DetectCollision();
-  if(collisionsCount!=0){
-      println(collisionsCount);
-  }
+  //if(collisionsCount!=0){
+  //    println(collisionsCount);
+  //}
+  DrawHud();
   collisionsCount=0;
   
 
@@ -65,19 +63,25 @@ void draw() {
     objects.get(i).Draw();
   }
   
-  //currentTime = millis();
   deltaTime = millis()-lastTime;
-  //textSize(32);
-  //text("FPS: "+ 1/(deltaTime/1000) , 10, 30); 
-  //println(deltaTime);
   lastTime = millis();
 }
+
+
+void DrawHud(){
+  cam.beginHUD();
+  textSize(32);
+  text("FPS: "+ 1/(deltaTime/1000) , 10, 30); 
+  text("Collision Count: "+ collisionsCount , 10, 60); 
+  cam.endHUD();
+}
+
 
 
 void AddObjectToScene(PVector position){
   Object obj = new Object();
   obj.AddMesh(loadShape("Resources/Pyramid.obj"));
-  obj.AddCollider(new Collider(obj));
+  obj.AddCollider(new SphereCollider(obj));
   obj.SetPosition(position);
   objects.add(obj);
 }
@@ -86,21 +90,26 @@ void AddObjectToScene(PVector position){
 void DetectCollision(){
   for(int i=0; i< objects.size()-1;i++){
     for(int j=i+1; j<objects.size(); j++){
-       PVector colliderPos1 = objects.get(i).position.copy();
-       PVector colliderPos2 = objects.get(j).position.copy();
-       
-       PVector differenceVector= colliderPos2.sub(colliderPos1);
-       float collider1Radius = objects.get(i).collider.radius;
-       float collider2Radius = objects.get(j).collider.radius;
-       
-       if(differenceVector.mag()<= collider1Radius+collider2Radius){
-         //println(differenceVector.mag() + ":" + collider1Radius+collider2Radius);
-         
-         collisionsCount++;
-         differenceVector.normalize().mult(1);
-         ResolveCollision(new CollisionInfo(differenceVector,objects.get(i).collider,objects.get(j).collider));
-         //ResolveCollision(differenceVector,objects.get(i).collider,objects.get(j).collider);
+       CollisionInfo colInfo =  objects.get(i).collider.checkCollision(objects.get(j).collider);
+       if(colInfo!=null){
+         ResolveCollision(colInfo);
        }
+      
+       //PVector colliderPos1 = objects.get(i).position.copy();
+       //PVector colliderPos2 = objects.get(j).position.copy();
+       
+       //PVector differenceVector= colliderPos2.sub(colliderPos1);
+       //float collider1Radius = objects.get(i).collider.radius;
+       //float collider2Radius = objects.get(j).collider.radius;
+       
+       //if(differenceVector.mag()<= collider1Radius+collider2Radius){
+       //  //println(differenceVector.mag() + ":" + collider1Radius+collider2Radius);
+         
+       //  collisionsCount++;
+       //  differenceVector.normalize().mult(1);
+       //  ResolveCollision(new CollisionInfo(differenceVector,objects.get(i).collider,objects.get(j).collider));
+       //  //ResolveCollision(differenceVector,objects.get(i).collider,objects.get(j).collider);
+       //}
     }
   }
 }
