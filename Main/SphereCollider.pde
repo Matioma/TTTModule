@@ -3,10 +3,13 @@ class SphereCollider extends Collider{
   
   public float GetRadius(){ return radius;}
   
-  
   SphereCollider(Object owner){
     super(owner);
+    BoundingBox boundingBox = getBoundingBox(owner.getMesh());
+    
+    radius = boundingBox.GetDiagonal().mag()/2;
   }
+  
   
   void Draw(){
     if(!debugMode) return;

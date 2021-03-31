@@ -1,10 +1,10 @@
 
 
 class Simulation{
-  final int numberOfObjects =200;
-  final int widthArea=10;
-  final int heightArea=10;
-  final int depthArea=10;
+  final int numberOfObjects =1;
+  final int widthArea=1;
+  final int heightArea=1;
+  final int depthArea=1;
 
   Simulation(){
     StartSimulation();
@@ -18,12 +18,7 @@ class Simulation{
       objects.get(i).Update();
       objects.get(i).Draw();
     }
-  
   }
-  
-  
-  
-  
   
 
   void StartSimulation(){
@@ -43,7 +38,9 @@ class Simulation{
   
   void AddObjectToScene(PVector position){
     Object obj = new Object();
-    obj.AddMesh(loadShape("Resources/Pyramid.obj"));
+    obj.AddMesh(loadShape("Resources/Cube.obj"));
+    //obj.AddMesh(loadShape("Resources/Sphere.obj"));
+    //obj.AddMesh(loadShape("Resources/Pyramid.obj"));
     obj.AddCollider(new SphereCollider(obj));
     obj.SetPosition(position);
     

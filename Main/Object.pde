@@ -9,24 +9,23 @@ class Object{
   PVector rotation = PVector.random3D();
   public PVector getRotation(){return rotation.copy();};
   
-  PVector velocity = new PVector(0,0,0);
+  PVector scale = PVector.random3D().normalize().mult(5);
+  public PVector getScale(){return rotation.copy();};
   
+  PVector velocity = new PVector(0,0,0);
   
   
   Object(){ 
     
   }
   
-  
-  
   public void ProcessVertexData(){
+    if(meshToDraw == null) return;
+    if(meshToDraw.getChildCount() ==0) return;
+    
     PMatrix3D matrix =  GetMatrix();
     
-    //println( "----------------Face Count Children----------------");
-    //println(  meshToDraw.getChildCount());
-    
     for(int i=0; i< meshToDraw.getChildCount(); i++){
-      println(i+ ":  Child");
       for(int j=0; j<meshToDraw.getChild(i).getVertexCount(); j++){
         PVector resultVector= new PVector();
         matrix.mult(meshToDraw.getChild(i).getVertex(j),resultVector);
@@ -39,19 +38,19 @@ class Object{
           sphere(0.4);
           popMatrix();
         }
-        
-        
-        println(resultVector);
+        //println(resultVector);
       }
     }
   }
   
   PMatrix3D GetMatrix(){
     PMatrix3D matrix  = new PMatrix3D();
+    
     matrix.translate(position.x, position.y, position.z);
     matrix.rotateX(rotation.x);
     matrix.rotateY(rotation.y);
     matrix.rotateZ(rotation.y);
+    matrix.scale(scale.x);
     return matrix;
   }
   
@@ -61,6 +60,7 @@ class Object{
     
     meshToDraw.resetMatrix();
     meshToDraw.translate(position.x, position.y, position.z);
+    
      
     ProcessVertexData();
   }
@@ -74,7 +74,6 @@ class Object{
   }
  
   void Update(){
-     rotation.add(new PVector(0.01,0,0));
      position.add(velocity);
      velocity.mult(0);
   }
@@ -90,7 +89,7 @@ class Object{
     rotateX(rotation.x);
     rotateY(rotation.y);
     rotateZ(rotation.y);
-    
+    scale(scale.x);
     
     //noStroke();
     if(seeMeshes) shape(meshToDraw);
