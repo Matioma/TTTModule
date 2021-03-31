@@ -17,54 +17,64 @@ final int widthArea=10;
 final int heightArea=10;
 final int depthArea=10;
 
-
+long MemoryUsed=0;
 
 float lastTime;
 float currentTime=0;
 float deltaTime =0;
 
+private static final long MEGABYTE = 1024L * 1024L;
+public static double bytesToMegabytes(long bytes) {
+  return (double)bytes / MEGABYTE;
+}
+
+
 void setup() {
-  
-  
-  
   size(512, 512, P3D);
   
+  
+  //long before = Runtime.getRuntime().freeMemory();
+ 
   for(int i=0; i< numberOfObjects; i++){
       float x = random(-widthArea/2,widthArea/2);
       float y = random(-heightArea/2,heightArea/2);
       float z = random(-depthArea/2,depthArea/2);
      AddObjectToScene(new PVector(x,y,z));
   }
+  
+  Runtime runtime = Runtime.getRuntime();
+  runtime.gc();
  
+  MemoryUsed = runtime.totalMemory() - runtime.freeMemory();
+  
+  
+  //println(Runtime.getRuntime().freeMemory());
+  //MemoryUsed = before - Runtime.getRuntime().freeMemory();
   
   cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(50);
   cam.setMaximumDistance(5000);
-  
   
   lastTime=millis();
 }
 
 void draw() {
   background(0);
- 
   lights();
-  
   DetectCollision();
-  //if(collisionsCount!=0){
-  //    println(collisionsCount);
-  //}
-  DrawHud();
-  collisionsCount=0;
   
-
   for(int i=0; i< objects.size();i++){
     objects.get(i).Update();
     objects.get(i).Draw();
   }
   
+  DrawHud();
+  
+  
+  
   deltaTime = millis()-lastTime;
   lastTime = millis();
+   collisionsCount=0;
 }
 
 
@@ -73,6 +83,16 @@ void DrawHud(){
   textSize(32);
   text("FPS: "+ 1/(deltaTime/1000) , 10, 30); 
   text("Collision Count: "+ collisionsCount , 10, 60); 
+  
+  textSize(16);
+  String strDouble = String.format("%.2f", bytesToMegabytes(MemoryUsed));
+  text("Memory used on the objects+Collider: "+strDouble  + " MB" , 10, 90); 
+  //text("total Memory: "+ Runtime.getRuntime().totalMemory() , 10, 120); 
+  //text("free Memory: "+ Runtime.getRuntime().freeMemory() , 10, 150); 
+  
+    //long maxMemory = ;
+    //long allocatedMemory = Runtime.getRuntime().totalMemory();
+    //long freeMemory = Runtime.getRuntime().freeMemory();
   cam.endHUD();
 }
 
@@ -83,6 +103,7 @@ void AddObjectToScene(PVector position){
   obj.AddMesh(loadShape("Resources/Pyramid.obj"));
   obj.AddCollider(new SphereCollider(obj));
   obj.SetPosition(position);
+  
   objects.add(obj);
 }
 
