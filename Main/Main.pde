@@ -11,11 +11,11 @@ static boolean seeMeshes =true;
 static int collisionsCount =0;
 
 
-final int numberOfObjects =500;
+final int numberOfObjects =1000;
 
-final int widthArea=10;
-final int heightArea=10;
-final int depthArea=10;
+final int widthArea=100;
+final int heightArea=100;
+final int depthArea=100;
 
 long MemoryUsed=0;
 
@@ -81,18 +81,14 @@ void draw() {
 void DrawHud(){
   cam.beginHUD();
   textSize(32);
-  text("FPS: "+ 1/(deltaTime/1000) , 10, 30); 
+  
+  String fps = String.format("%.2f", 1/(deltaTime/1000));
+  text("FPS: "+ fps , 10, 30); 
   text("Collision Count: "+ collisionsCount , 10, 60); 
   
   textSize(16);
   String strDouble = String.format("%.2f", bytesToMegabytes(MemoryUsed));
   text("Memory used on the objects+Collider: "+strDouble  + " MB" , 10, 90); 
-  //text("total Memory: "+ Runtime.getRuntime().totalMemory() , 10, 120); 
-  //text("free Memory: "+ Runtime.getRuntime().freeMemory() , 10, 150); 
-  
-    //long maxMemory = ;
-    //long allocatedMemory = Runtime.getRuntime().totalMemory();
-    //long freeMemory = Runtime.getRuntime().freeMemory();
   cam.endHUD();
 }
 
