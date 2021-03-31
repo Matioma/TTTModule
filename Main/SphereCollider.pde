@@ -10,9 +10,12 @@ class SphereCollider extends Collider{
   
   void Draw(){
     if(!debugMode) return;
+    pushMatrix();
     noFill();
     stroke(127,0,0);
+    sphereDetail(6);
     sphere(radius);
+    popMatrix();
   }
   
   

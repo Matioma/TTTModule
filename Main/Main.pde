@@ -7,11 +7,12 @@ ArrayList<CollisionInfo> collisions = new ArrayList<CollisionInfo>();
 
 static boolean debugMode=false;
 static boolean seeMeshes =true;
+static boolean showVerticies = false;
 
 static int collisionsCount =0;
 
 
-final int numberOfObjects =200;
+final int numberOfObjects =100;
 
 final int widthArea=100;
 final int heightArea=100;
@@ -111,22 +112,6 @@ void DetectCollision(){
        if(colInfo!=null){
          ResolveCollision(colInfo);
        }
-      
-       //PVector colliderPos1 = objects.get(i).position.copy();
-       //PVector colliderPos2 = objects.get(j).position.copy();
-       
-       //PVector differenceVector= colliderPos2.sub(colliderPos1);
-       //float collider1Radius = objects.get(i).collider.radius;
-       //float collider2Radius = objects.get(j).collider.radius;
-       
-       //if(differenceVector.mag()<= collider1Radius+collider2Radius){
-       //  //println(differenceVector.mag() + ":" + collider1Radius+collider2Radius);
-         
-       //  collisionsCount++;
-       //  differenceVector.normalize().mult(1);
-       //  ResolveCollision(new CollisionInfo(differenceVector,objects.get(i).collider,objects.get(j).collider));
-       //  //ResolveCollision(differenceVector,objects.get(i).collider,objects.get(j).collider);
-       //}
     }
   }
 }
@@ -156,6 +141,9 @@ void keyReleased() {
    if (key == 's' || key == 'S') {
      ToggleVisibleMesh();
    }
+   if (key == 'a' || key == 'A') {
+     ToggleShowVerticies();
+   }
 }
 
 
@@ -165,4 +153,9 @@ void ToggleDebugMode(){
 
 void ToggleVisibleMesh(){
   seeMeshes = !seeMeshes;
+}
+
+
+void ToggleShowVerticies(){
+  showVerticies = !showVerticies;
 }

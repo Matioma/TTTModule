@@ -19,15 +19,26 @@ class Object{
   
   
   
-  public void VertexData(){
-    println( "----------------Face Count Children----------------");
-    println(  meshToDraw.getChildCount());
+  public void ProcessVertexData(){
+    //println( "----------------Face Count Children----------------");
+    //println(  meshToDraw.getChildCount());
     
     for(int i=0; i< meshToDraw.getChildCount(); i++){
       println(i+ ":  Child");
       for(int j=0; j<meshToDraw.getChild(i).getVertexCount(); j++){
         PVector resultVector= new PVector();
         GetMatrix().mult(meshToDraw.getChild(i).getVertex(j),resultVector);
+        
+        if(showVerticies){
+          pushMatrix();
+          translate(resultVector.x, resultVector.y, resultVector.z);
+          stroke(0,127,0);
+          sphereDetail(3);
+          sphere(0.4);
+          popMatrix();
+        }
+        
+        
         println(resultVector);
       }
     }
@@ -49,7 +60,7 @@ class Object{
     meshToDraw.resetMatrix();
     meshToDraw.translate(position.x, position.y, position.z);
      
-    VertexData();
+    ProcessVertexData();
   }
   
   void AddCollider(Collider collider){
@@ -68,13 +79,15 @@ class Object{
   
   void Draw(){
     if(meshToDraw ==null) return;
-    VertexData();
+    ProcessVertexData();
     
-    meshToDraw.resetMatrix();
-    meshToDraw.applyMatrix(GetMatrix());
     
    
     pushMatrix();
+    translate(position.x, position.y, position.z);
+    rotateX(rotation.x);
+    rotateY(rotation.y);
+    rotateZ(rotation.y);
     
     
     //noStroke();
