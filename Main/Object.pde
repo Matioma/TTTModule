@@ -20,6 +20,8 @@ class Object{
   
   
   public void ProcessVertexData(){
+    PMatrix3D matrix =  GetMatrix();
+    
     //println( "----------------Face Count Children----------------");
     //println(  meshToDraw.getChildCount());
     
@@ -27,7 +29,7 @@ class Object{
       println(i+ ":  Child");
       for(int j=0; j<meshToDraw.getChild(i).getVertexCount(); j++){
         PVector resultVector= new PVector();
-        GetMatrix().mult(meshToDraw.getChild(i).getVertex(j),resultVector);
+        matrix.mult(meshToDraw.getChild(i).getVertex(j),resultVector);
         
         if(showVerticies){
           pushMatrix();

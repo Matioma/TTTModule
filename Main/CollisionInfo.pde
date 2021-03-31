@@ -10,4 +10,7 @@ class CollisionInfo{
     this.col1 = col1;
     this.col2 =col2;
   }
+  
+  
+
 }
