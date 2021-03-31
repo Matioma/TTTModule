@@ -11,7 +11,7 @@ static boolean seeMeshes =true;
 static int collisionsCount =0;
 
 
-final int numberOfObjects =1000;
+final int numberOfObjects =200;
 
 final int widthArea=100;
 final int heightArea=100;
@@ -88,7 +88,7 @@ void DrawHud(){
   
   textSize(16);
   String strDouble = String.format("%.2f", bytesToMegabytes(MemoryUsed));
-  text("Memory used on the objects+Collider: "+strDouble  + " MB" , 10, 90); 
+  text("Memory used: "+strDouble  + " MB" , 10, 90); 
   cam.endHUD();
 }
 

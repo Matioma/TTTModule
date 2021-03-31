@@ -31,7 +31,6 @@ class SphereCollider extends Collider{
          collisionsCount++;
          differenceVector.normalize().mult(1);
          return new CollisionInfo(differenceVector,this,collider2);
-         //ResolveCollision(differenceVector,objects.get(i).collider,objects.get(j).collider);
       }
     }
     return null;
