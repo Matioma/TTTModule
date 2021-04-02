@@ -1,10 +1,10 @@
 
 
 class Simulation{
-  final int numberOfObjects =1;
-  final int widthArea=1;
-  final int heightArea=1;
-  final int depthArea=1;
+  final int numberOfObjects =100;
+  final int widthArea=5;
+  final int heightArea=5;
+  final int depthArea=5;
 
   Simulation(){
     StartSimulation();
@@ -53,6 +53,7 @@ class Simulation{
          CollisionInfo colInfo =  objects.get(i).collider.checkCollision(objects.get(j).collider);
          if(colInfo!=null){
            ResolveCollision(colInfo);
+           
          }
       }
     }

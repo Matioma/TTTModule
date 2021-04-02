@@ -9,9 +9,10 @@ abstract class Collider{
 
   }
   
-  protected BoundingBox getBoundingBox(PShape meshToDraw){
+  public BoundingBox getBoundingBox(PShape meshToDraw){
     if(meshToDraw == null) return null;
     if(meshToDraw.getChildCount() ==0) return null;
+    
     
     PMatrix3D matrix =  owner.GetMatrix();
     
@@ -21,11 +22,12 @@ abstract class Collider{
     float minX = firstVertex.x;
     float minY = firstVertex.y;
     float minZ = firstVertex.z;
-  
+ 
     float maxX = firstVertex.x; 
     float maxY = firstVertex.y;
     float maxZ =firstVertex.z;
-   
+    
+    
     for(int i=0; i< meshToDraw.getChildCount(); i++){
       for(int j=0; j<meshToDraw.getChild(i).getVertexCount(); j++){
         PVector resultVector= new PVector();
@@ -37,14 +39,22 @@ abstract class Collider{
         
         if(resultVector.x > maxX) maxX = resultVector.x;
         if(resultVector.y > maxY) maxY = resultVector.y;
-        if(resultVector.z > maxZ) maxZ = resultVector.z;
+        if(resultVector.z > maxZ) maxZ = resultVector.z;   
       }
     }
+    
     PVector vec1 =new PVector(minX,minY,minZ);
-    PVector vec2 =new PVector(maxX,maxY,maxZ);
-    println(vec1);
-    println(vec2);
-    return new BoundingBox(vec1,vec2);
+    PVector vec2 =new PVector(maxX,maxY,maxZ);  
+    vec2.sub(vec1);
+    
+    float xSize = abs(vec2.x);
+    float ySize = abs(vec2.y);
+    float zSize = abs(vec2.z);
+    
+    //BoundingBox boundingBox = new BoundingBox(xSize,ySize,zSize);
+    //boundingBox.Draw(owner.position);
+    
+    return new BoundingBox(xSize,ySize,zSize);
   }
   
   abstract void Draw();

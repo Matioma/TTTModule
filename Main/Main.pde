@@ -13,10 +13,10 @@ static int collisionsCount =0;
 
 
 
-final int numberOfObjects =100;
-final int widthArea=10;
-final int heightArea=10;
-final int depthArea=10;
+//final int numberOfObjects =100;
+//final int widthArea=10;
+//final int heightArea=10;
+//final int depthArea=10;
 
 
 
@@ -36,17 +36,6 @@ void setup() {
   
   simulation = new Simulation();
 
-  //for(int i=0; i< numberOfObjects; i++){
-  //    float x = random(-widthArea/2,widthArea/2);
-  //    float y = random(-heightArea/2,heightArea/2);
-  //    float z = random(-depthArea/2,depthArea/2);
-  //   AddObjectToScene(new PVector(x,y,z));
-  //}
-  //Runtime runtime = Runtime.getRuntime();
-  //runtime.gc();
-  //memoryUsed = runtime.totalMemory() - runtime.freeMemory();
-  
-  
   cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(50);
   cam.setMaximumDistance(5000);
@@ -82,10 +71,6 @@ void DrawHud(){
   text("Memory used: "+strDouble  + " MB" , 10, 90); 
   cam.endHUD();
 }
-
-
-
-
 
 void keyReleased() {
    if (key == 'd' || key == 'D') {

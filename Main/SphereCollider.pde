@@ -7,18 +7,19 @@ class SphereCollider extends Collider{
     super(owner);
     BoundingBox boundingBox = getBoundingBox(owner.getMesh());
     
-    radius = boundingBox.GetDiagonal().mag()/2;
+    radius = boundingBox.GetCircumscribedSphereRadius();
+    //radius =sqrt(3);
   }
   
   
   void Draw(){
     if(!debugMode) return;
-    pushMatrix();
-    noFill();
-    stroke(127,0,0);
-    sphereDetail(6);
-    sphere(radius);
-    popMatrix();
+      pushMatrix();
+      noFill();
+      stroke(127,0,0);
+      sphereDetail(12);
+      sphere(radius);
+      popMatrix();
   }
   
   
