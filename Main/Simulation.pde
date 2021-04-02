@@ -1,10 +1,14 @@
+enum SimulationType{
+  Sphere,
+  Box
+}
 
 
 class Simulation{
-  final int numberOfObjects =100;
-  final int widthArea=5;
-  final int heightArea=5;
-  final int depthArea=5;
+  final int numberOfObjects =10;
+  final int widthArea=2;
+  final int heightArea=2;
+  final int depthArea=2;
 
   Simulation(){
     StartSimulation();
@@ -41,7 +45,10 @@ class Simulation{
     obj.AddMesh(loadShape("Resources/Cube.obj"));
     //obj.AddMesh(loadShape("Resources/Sphere.obj"));
     //obj.AddMesh(loadShape("Resources/Pyramid.obj"));
-    obj.AddCollider(new SphereCollider(obj));
+    
+    
+    //obj.AddCollider(new SphereCollider(obj));
+    obj.AddCollider(new BoxCollider(obj));
     obj.SetPosition(position);
     
     objects.add(obj);
@@ -53,7 +60,6 @@ class Simulation{
          CollisionInfo colInfo =  objects.get(i).collider.checkCollision(objects.get(j).collider);
          if(colInfo!=null){
            ResolveCollision(colInfo);
-           
          }
       }
     }

@@ -91,8 +91,8 @@ class Object{
   void Draw(){
     if(meshToDraw ==null) return;
     ProcessVertexData();
-
-    //BoundingBox boundingBox = collider.getBoundingBox(meshToDraw); 
+    
+    BoundingBox boundingBox = collider.getBoundingBox(meshToDraw); 
     //boundingBox.Draw(position);
    
     DrawTheMesh();

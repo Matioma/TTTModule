@@ -6,6 +6,9 @@ class BoundingBox{
   float ySize =0;
   float zSize =0;
   
+  
+  
+  
   BoundingBox(float pXSize, float pYSize, float pZSize){
     xSize =pXSize;
     ySize = pYSize;
@@ -22,8 +25,6 @@ class BoundingBox{
     float maxDimension = xSize;
     if(ySize >maxDimension) maxDimension = ySize;
     if(zSize > maxDimension) maxDimension = zSize;
-    
-    
     return maxDimension/2;
   }
   

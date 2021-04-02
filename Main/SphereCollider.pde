@@ -1,7 +1,7 @@
 class SphereCollider extends Collider{
   float radius=1;
   
-  public float GetRadius(){ return radius;}
+  //public float GetRadius(){ return radius;}
   
   SphereCollider(Object owner){
     super(owner);
@@ -32,7 +32,7 @@ class SphereCollider extends Collider{
            
       PVector differenceVector= colliderPos2.sub(colliderPos1);
       float collider1Radius = radius;
-      float collider2Radius = collider2.GetRadius();
+      float collider2Radius = collider2.radius;
            
       if(differenceVector.mag()<= collider1Radius+collider2Radius){
          collisionsCount++;
