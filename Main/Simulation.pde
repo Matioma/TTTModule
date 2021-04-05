@@ -1,11 +1,6 @@
-enum SimulationType{
-  Sphere,
-  Box
-}
 
-
-class Simulation{
-  final int numberOfObjects =10;
+abstract class Simulation{
+  final int numberOfObjects =100;
   final int widthArea=2;
   final int heightArea=2;
   final int depthArea=2;
@@ -16,7 +11,6 @@ class Simulation{
   
   public void Update(){
     DetectCollision();   
-    
     //Update each object
     for(int i=0; i< objects.size();i++){
       objects.get(i).Update();
@@ -33,26 +27,13 @@ class Simulation{
         float z = random(-depthArea/2,depthArea/2);
        AddObjectToScene(new PVector(x,y,z));
     }
-    
     //Compute memory usage
     Runtime runtime = Runtime.getRuntime();
     runtime.gc();
     memoryUsed = runtime.totalMemory() - runtime.freeMemory();
   }
   
-  void AddObjectToScene(PVector position){
-    Object obj = new Object();
-    obj.AddMesh(loadShape("Resources/Cube.obj"));
-    //obj.AddMesh(loadShape("Resources/Sphere.obj"));
-    //obj.AddMesh(loadShape("Resources/Pyramid.obj"));
-    
-    
-    //obj.AddCollider(new SphereCollider(obj));
-    obj.AddCollider(new BoxCollider(obj));
-    obj.SetPosition(position);
-    
-    objects.add(obj);
-  }
+  abstract void AddObjectToScene(PVector position);
   
   void DetectCollision(){
     for(int i=0; i< objects.size()-1;i++){
