@@ -7,7 +7,7 @@ class Object{
   public PVector getPosition(){return position.copy();};
   PVector rotation = PVector.random3D();
   public PVector getRotation(){return rotation.copy();};
-  PVector scale = PVector.random3D().normalize().mult(5);
+  PVector scale = PVector.random3D().normalize().mult(10);
   public PVector getScale(){return rotation.copy();};
   
   PVector velocity = new PVector(0,0,0);
@@ -31,15 +31,17 @@ class Object{
     return matrix;
   }
   
-  void ProcessVertexData(IProcessVertecies commandToProcess){
+  public void ProcessVertexData(IProcessVertecies cmdToProcessVerticies){
     if(meshToDraw == null) return;
       if(meshToDraw.getChildCount() ==0) return;
       
       PMatrix3D matrix =  GetMatrix();
       
       for(int i=0; i< meshToDraw.getChildCount(); i++){
+        cmdToProcessVerticies.processPolygons(meshToDraw.getChild(i),matrix);
+
         for(int j=0; j<meshToDraw.getChild(i).getVertexCount(); j++){
-          commandToProcess.processVerticies(meshToDraw.getChild(i).getVertex(j),meshToDraw.getChild(i),matrix);
+          cmdToProcessVerticies.processVerticies(meshToDraw.getChild(i).getVertex(j),matrix);
         }
       }
   }
@@ -51,7 +53,7 @@ class Object{
     meshToDraw.resetMatrix();
     meshToDraw.translate(position.x, position.y, position.z);
   }
-  
+
   void AddCollider(Collider collider){
     this.collider = collider;
   }
@@ -89,10 +91,8 @@ class Object{
   }
   
   void DrawCollider(){
-     pushMatrix();
-      translate(position.x, position.y, position.z);
+    pushMatrix();
       if(collider !=null) collider.Draw();
     popMatrix();
   }
-  
 }

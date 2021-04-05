@@ -1,17 +1,14 @@
-class ColliderConvex extends Collider{
+class ColliderSat extends Collider{
     PShape mesh;
 
-    ColliderConvex(Object owner){
+    ColliderSat(Object owner){
         super(owner);
-        // BoundingBox boundingBox = getBoundingBox(owner.getMesh());
-     
     }
-  
+    
 
     void Draw(){
-        
-
-
+        //this.owner.ProcessVertexData(new processPolygons())
+        owner.ProcessVertexData(new PrintNormals());
     }
 
     CollisionInfo checkCollision(Collider col){

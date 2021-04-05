@@ -16,11 +16,15 @@ class BoxCollider extends Collider{
   void Draw(){
     if(!debugMode) return;
       pushMatrix();
+      translate(owner.getPosition().x,owner.getPosition().y,owner.getPosition().z);
       noFill();
       stroke(127,0,0);
       sphereDetail(12);
       box(XSize,YSize,ZSize);
+
+      
       popMatrix();
+      owner.ProcessVertexData(new PrintNormals());
   }
   public CollisionInfo checkCollision(Collider col){
     if(col instanceof SphereCollider){

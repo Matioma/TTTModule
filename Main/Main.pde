@@ -28,7 +28,7 @@ Simulation simulation;
 void setup() {
   size(512, 512, P3D);
   
-  simulation  = new SimulationSphere();
+  simulation  = new SimulationAlignedBox();
 
   cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(50);
