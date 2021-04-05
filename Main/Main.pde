@@ -1,4 +1,6 @@
 import peasy.*;
+
+
 PeasyCam cam;
 
 static boolean debugMode=false;
@@ -9,14 +11,6 @@ static boolean showVerticies = false;
 ArrayList<Object> objects = new ArrayList<Object>();
 ArrayList<CollisionInfo> collisions = new ArrayList<CollisionInfo>();
 static int collisionsCount =0;
-
-
-
-
-//final int numberOfObjects =100;
-//final int widthArea=10;
-//final int heightArea=10;
-//final int depthArea=10;
 
 
 
@@ -34,7 +28,7 @@ Simulation simulation;
 void setup() {
   size(512, 512, P3D);
   
-  simulation = new Simulation();
+  simulation  = new SimulationSphere();
 
   cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(50);
@@ -49,8 +43,6 @@ void draw() {
   
   simulation.Update();
   DrawHud();
-  
-  
   
   deltaTime = millis()-lastTime;
   lastTime = millis();
@@ -70,26 +62,4 @@ void DrawHud(){
   String strDouble = String.format("%.2f", bytesToMegabytes(memoryUsed));
   text("Memory used: "+strDouble  + " MB" , 10, 90); 
   cam.endHUD();
-}
-
-void keyReleased() {
-   if (key == 'd' || key == 'D') {
-     ToggleDebugMode();
-   }
-   if (key == 's' || key == 'S') {
-     ToggleVisibleMesh();
-   }
-   if (key == 'a' || key == 'A') {
-     ToggleShowVerticies();
-   }
-}
-
-void ToggleDebugMode(){
-  debugMode = !debugMode;
-}
-void ToggleVisibleMesh(){
-  seeMeshes = !seeMeshes;
-}
-void ToggleShowVerticies(){
-  showVerticies = !showVerticies;
 }

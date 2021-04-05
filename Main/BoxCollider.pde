@@ -10,11 +10,6 @@ class BoxCollider extends Collider{
     XSize = boundingBox.xSize;
     YSize = boundingBox.ySize;
     ZSize = boundingBox.zSize;
-    
-    
-    
-    //radius = boundingBox.GetCircumscribedSphereRadius();
-    //radius =sqrt(3);
   }
   
   
@@ -25,11 +20,8 @@ class BoxCollider extends Collider{
       stroke(127,0,0);
       sphereDetail(12);
       box(XSize,YSize,ZSize);
-      //sphere(radius);
       popMatrix();
   }
-  
-  
   public CollisionInfo checkCollision(Collider col){
     if(col instanceof SphereCollider){
       SphereCollider collider2= (SphereCollider)col; 
@@ -53,9 +45,7 @@ class BoxCollider extends Collider{
       
       PVector colliderPos1 = owner.position.copy();
       PVector colliderPos2 = col.owner.position.copy();
-           
       PVector differenceVector= colliderPos2.sub(colliderPos1);
-      
       
       if(abs(differenceVector.x) >(XSize/2+collider2.XSize/2)) return null;
       if(abs(differenceVector.y) >(YSize/2+collider2.YSize/2)) return null;

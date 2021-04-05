@@ -13,7 +13,6 @@ abstract class Collider{
     if(meshToDraw == null) return null;
     if(meshToDraw.getChildCount() ==0) return null;
     
-    
     PMatrix3D matrix =  owner.GetMatrix();
     
     PVector firstVertex =new PVector();
@@ -50,10 +49,6 @@ abstract class Collider{
     float xSize = abs(vec2.x);
     float ySize = abs(vec2.y);
     float zSize = abs(vec2.z);
-    
-    //BoundingBox boundingBox = new BoundingBox(xSize,ySize,zSize);
-    //boundingBox.Draw(owner.position);
-    
     return new BoundingBox(xSize,ySize,zSize);
   }
   
