@@ -47,12 +47,12 @@ class PrintNormals implements IProcessVertecies{
    
 
 
-    PVector edge1 = p1.copy().sub(p2);
-    PVector edge2 = p3.copy().sub(p2);
+    PVector edge1 = p2.copy().sub(p1);
+    PVector edge2 = p3.copy().sub(p1);
 
     normal = edge1.cross(edge2).mult(1);
     normal.normalize();
-    normal.mult(2);
+    normal.mult(3);
 
     pushMatrix();
     stroke(127,0,0);
@@ -69,14 +69,11 @@ class PrintNormals implements IProcessVertecies{
       PVector startNormal= new PVector();
       matrix.mult(poligon.getVertex(j).copy(),startNormal);
     
-
       PVector endNormal = startNormal.copy().add(normal);
-
       pushMatrix();
         translate(startNormal.x,startNormal.y,startNormal.z);
         sphere(0.30);
       popMatrix();
-
       pushMatrix();
         translate(endNormal.x,endNormal.y,endNormal.z);
         sphere(0.1);
