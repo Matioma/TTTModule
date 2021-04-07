@@ -51,6 +51,8 @@ class PrintNormals implements IProcessVertecies{
     normal.normalize();
     normal.mult(3);
 
+    DrawUtil util = new DrawUtil();
+
     pushMatrix();
     stroke(127,0,0);
     fill(255,0,0);
@@ -63,12 +65,10 @@ class PrintNormals implements IProcessVertecies{
     
       PVector endNormal = startNormal.copy().add(normal);
       
-      DrawUtil util = new DrawUtil();
+      
       util.DrawVector(startNormal,endNormal);
     }
     popMatrix();
-
-   
   }
 
 
