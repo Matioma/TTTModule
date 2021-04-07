@@ -37,7 +37,6 @@ class PrintNormals implements IProcessVertecies{
       println("not a polygon");
       return;
     }
-
     PVector p1 = new PVector();
     matrix.mult(poligon.getVertex(0).copy(),p1);
     PVector p2 = new PVector();
@@ -45,8 +44,6 @@ class PrintNormals implements IProcessVertecies{
     PVector p3 = new PVector();
     matrix.mult(poligon.getVertex(2).copy(),p3);
    
-
-
     PVector edge1 = p2.copy().sub(p1);
     PVector edge2 = p3.copy().sub(p1);
 
@@ -57,35 +54,22 @@ class PrintNormals implements IProcessVertecies{
     pushMatrix();
     stroke(127,0,0);
     fill(255,0,0);
-
-    
     for(int j=0; j<poligon.getVertexCount(); j++){
       PVector resultVector= new PVector();
       matrix.mult(poligon.getVertex(j),resultVector);
       
-
-
-
       PVector startNormal= new PVector();
       matrix.mult(poligon.getVertex(j).copy(),startNormal);
     
       PVector endNormal = startNormal.copy().add(normal);
-      pushMatrix();
-        translate(startNormal.x,startNormal.y,startNormal.z);
-        sphere(0.30);
-      popMatrix();
-      pushMatrix();
-        translate(endNormal.x,endNormal.y,endNormal.z);
-        sphere(0.1);
-      popMatrix();
-
       
-      beginShape(LINES);
-      vertex(startNormal.x,startNormal.y,startNormal.z);
-      vertex(endNormal.x,endNormal.y,endNormal.z);
-      endShape();
+      DrawUtil util = new DrawUtil();
+      util.DrawVector(startNormal,endNormal);
     }
-
     popMatrix();
+
+   
   }
+
+
 }

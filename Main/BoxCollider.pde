@@ -22,9 +22,7 @@ class BoxCollider extends Collider{
       sphereDetail(12);
       box(XSize,YSize,ZSize);
 
-      
       popMatrix();
-      owner.ProcessVertexData(new PrintNormals());
   }
   public CollisionInfo checkCollision(Collider col){
     if(col instanceof SphereCollider){

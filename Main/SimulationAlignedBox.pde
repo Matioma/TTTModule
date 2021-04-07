@@ -4,7 +4,7 @@ class SimulationAlignedBox extends Simulation{
         obj.AddMesh(loadShape("Resources/Cube.obj"));
        
        
-        obj.AddCollider(new BoxCollider(obj));
+        obj.AddCollider(new ColliderSat(obj));
         obj.SetPosition(position);
         objects.add(obj);
     }

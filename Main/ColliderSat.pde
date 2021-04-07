@@ -3,6 +3,7 @@ class ColliderSat extends Collider{
 
     ColliderSat(Object owner){
         super(owner);
+        mesh = owner.getMesh();
     }
     
 
@@ -10,6 +11,7 @@ class ColliderSat extends Collider{
         //this.owner.ProcessVertexData(new processPolygons())
         owner.ProcessVertexData(new PrintNormals());
     }
+    
 
     CollisionInfo checkCollision(Collider col){
         
