@@ -1,4 +1,8 @@
 class Object{
+  float _minScale =0;
+  float _maxScale =10;
+
+
   PShape meshToDraw;
   public PShape getMesh(){return meshToDraw;};
   Collider collider;
@@ -7,7 +11,8 @@ class Object{
   public PVector getPosition(){return position.copy();};
   PVector rotation = PVector.random3D();
   public PVector getRotation(){return rotation.copy();};
-  PVector scale = PVector.random3D().normalize().mult(10);
+  PVector scale = new PVector(random(_minScale, _maxScale),random(_minScale, _maxScale),random(_minScale, _maxScale));
+
   public PVector getScale(){return rotation.copy();};
   
   PVector velocity = new PVector(0,0,0);
