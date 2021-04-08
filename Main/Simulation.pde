@@ -1,6 +1,6 @@
 
 abstract class Simulation{
-  final int numberOfObjects =10;
+  final int numberOfObjects =40;
   final int widthArea=2;
   final int heightArea=2;
   final int depthArea=2;
@@ -39,7 +39,6 @@ abstract class Simulation{
     for(int i=0; i< objects.size()-1;i++){
       for(int j=i+1; j<objects.size(); j++){
         CollisionInfo colInfo =collisionDetectionMethod(objects.get(i),objects.get(j));
-         //CollisionInfo colInfo =  objects.get(i).collider.checkCollision(objects.get(j).collider);
         if(colInfo!=null){
           ResolveCollision(colInfo);
         }
@@ -50,8 +49,6 @@ abstract class Simulation{
   protected CollisionInfo  collisionDetectionMethod(Object firstObject, Object secondObject){
     return firstObject.collider.checkCollision(secondObject.collider);
   }
-
-
   
   void ResolveCollision(CollisionInfo collision){
       collision.col1.owner.velocity.sub(collision.normal.mult(0.1));

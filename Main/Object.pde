@@ -1,3 +1,10 @@
+enum CollidersTypes{
+  Box,
+  Sphere,
+  Sat,
+}
+
+
 class Object{
   float _minScale =0;
   float _maxScale =10;
@@ -11,6 +18,38 @@ class Object{
   void AddNewCollider(Collider col){
     colliders.add(col);
   }
+
+
+
+  
+  Collider getCollider(CollidersTypes colliderType){
+    if(colliderType == CollidersTypes.Box){
+      for(int i=0; i<colliders.size();i++){
+        if( colliders.get(i) instanceof BoxCollider ){
+          return colliders.get(i);
+        }
+      }
+    }
+
+    if(colliderType == CollidersTypes.Sphere){
+      for(int i=0; i<colliders.size();i++){
+        if( colliders.get(i) instanceof SphereCollider ){
+          return colliders.get(i);
+        }
+      }
+    }
+
+    if(colliderType == CollidersTypes.Sat){
+      for(int i=0; i<colliders.size();i++){
+        if( colliders.get(i) instanceof ColliderSat ){
+          return colliders.get(i);
+        }
+      }
+    }
+    return null;
+  }
+  
+
 
   
   PVector position = new PVector(0,0,0);
@@ -102,7 +141,9 @@ class Object{
   
   void SetPosition(PVector position){
     this.position= position;
-    BoundingBox boundingBox = collider.getBoundingBox(meshToDraw); 
+
+    if(collider !=null){ BoundingBox boundingBox = collider.getBoundingBox(meshToDraw);}
+    
   }
  
   void Update(){
@@ -135,6 +176,12 @@ class Object{
   void DrawCollider(){
     pushMatrix();
       if(collider !=null) collider.Draw();
+
+      if(colliders.size()>0){
+        for(Collider col:colliders){
+          col.Draw();
+        }
+      }
     popMatrix();
   }
 }
