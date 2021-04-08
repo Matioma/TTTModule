@@ -29,7 +29,7 @@ void setup() {
   size(1024, 1024, P3D);
   frameRate(120);
   
-  simulation  = new SimulationAlignedBox();
+  simulation  = new SimulationSat();
 
   cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(50);

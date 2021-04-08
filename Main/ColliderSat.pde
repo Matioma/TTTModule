@@ -29,7 +29,6 @@ class ColliderSat extends Collider{
             for(int j=0; j<meshNormals2.size(); j++){
                 if(noOverlapOnNormal(meshNormals2.get(j),col.owner, owner,differenceVector)) return null;
             }
-
             //Check cross product collisions
             for(int i=0;i< meshNormals1.size(); i++){
                 for(int j=0; j<meshNormals2.size(); j++){
@@ -120,13 +119,9 @@ class ColliderSat extends Collider{
         PVector colliderPos1 = col1.owner.position.copy();
         PVector colliderPos2 = col2.owner.position.copy();      
         PVector differenceVector= colliderPos2.sub(colliderPos1);
-
         differenceVector.normalize();
         return new CollisionInfo(differenceVector,col1,col2);
     }
 
-    boolean projectionsOverlap(){
-        return false;
-    }
 
 }
