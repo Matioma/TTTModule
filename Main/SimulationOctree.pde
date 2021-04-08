@@ -1,15 +1,15 @@
 class SimulationOctreeSat extends Simulation{
     Space spaceTreeRoot;
-    float spaceSizeX =widthArea*2;
-    float spaceSizeY =heightArea*2;
-    float spaceSizeZ =depthArea*2;
+    float spaceSizeX =20;
+    float spaceSizeY =20;
+    float spaceSizeZ =20;
 
 
 
 
     SimulationOctreeSat(){
         super();
-        spaceTreeRoot = GetTheSpace();
+        //spaceTreeRoot = GetTheSpace();
     }
 
     //Get the space bounding all the meshes
@@ -21,6 +21,7 @@ class SimulationOctreeSat extends Simulation{
 
 
     public void Update(){
+        spaceTreeRoot = GetTheSpace();
         super.Update();
         spaceTreeRoot.Draw();
     }
@@ -28,7 +29,7 @@ class SimulationOctreeSat extends Simulation{
 
     void DetectCollision(){
         ArrayList<Space> leefSpaces = spaceTreeRoot.getLeafNodes();
-        println(leefSpaces.size(),leefSpaces.get(0).objectsInSpace.size());
+        // println(leefSpaces.size(),leefSpaces.get(0).objectsInSpace.size());
 
         for( Space space:leefSpaces){
             for(int i=0; i<space.objectsInSpace.size();i++){
