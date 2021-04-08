@@ -12,7 +12,6 @@ class BoxCollider extends Collider{
     ZSize = boundingBox.zSize;
   }
   
-  
   void Draw(){
     if(!debugMode) return;
       pushMatrix();
@@ -20,8 +19,7 @@ class BoxCollider extends Collider{
       noFill();
       stroke(127,0,0);
       sphereDetail(12);
-      box(XSize,YSize,ZSize);
-
+      box(XSize, YSize, ZSize);
       popMatrix();
   }
   public CollisionInfo checkCollision(Collider col){

@@ -1,9 +1,9 @@
 
 abstract class Simulation{
   final int numberOfObjects =40;
-  final int widthArea=2;
-  final int heightArea=2;
-  final int depthArea=2;
+  final int widthArea=200;
+  final int heightArea=200;
+  final int depthArea=200;
 
   Simulation(){
     StartSimulation();

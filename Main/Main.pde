@@ -29,7 +29,8 @@ void setup() {
   size(1024, 1024, P3D);
   frameRate(120);
   
-  simulation  = new SimulationBoxSat();
+  simulation = new SimulationOctreeSat();
+  // simulation  = new SimulationBoxSat();
   //simulation  = new SimulationSat();
 
   cam = new PeasyCam(this, 1000);
