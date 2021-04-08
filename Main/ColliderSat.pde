@@ -13,48 +13,36 @@ class ColliderSat extends Collider{
     }
 
     CollisionInfo checkCollision(Collider col){
-        ArrayList<PVector> normals = owner.getNormals();
         
         if(col instanceof ColliderSat){
-            ColliderSat col2 = (ColliderSat)col; 
+            PVector colliderPos1 = owner.position.copy();   
+            PVector colliderPos2 = col.owner.position.copy();      
+            PVector differenceVector= colliderPos2.sub(colliderPos1);
 
+            ArrayList<PVector> normals = owner.getNormals();
             for(int i=0; i<normals.size(); i++){
-                PVector colliderPos1 = owner.position.copy();   
-                PVector colliderPos2 = col.owner.position.copy();      
-                PVector differenceVector= colliderPos2.sub(colliderPos1);
                 float projectedDifference = differenceVector.dot(normals.get(i));
-
-                //First mesh range calculation
-                float maxProjection1 =0;
-                for(int polygon=0; polygon< mesh.getChildCount(); polygon++){
-                    for(int vertex=0; vertex<mesh.getChild(polygon).getVertexCount(); vertex++){
-                        PMatrix3D matrix = owner.GetMatrix();
-
-                        PVector globalVertexPos = new PVector(); 
-                        matrix.mult(mesh.getChild(polygon).getVertex(vertex).copy(),globalVertexPos);
-                        
-                        PVector rangeVector = globalVertexPos.copy().sub(colliderPos1);
-                        float projectedValue = rangeVector.dot(normals.get(i));
-                        if(projectedValue>maxProjection1) maxProjection1 = projectedValue;
-                    }
-                }
-
-                //Second mesh range calculation
-                float minProjection2 =0;
-                for(int polygon=0; polygon< col2.mesh.getChildCount(); polygon++){
-                    for(int vertex=0; vertex< col2.mesh.getChild(polygon).getVertexCount(); vertex++){
-                        PMatrix3D matrix = owner.GetMatrix();
-
-                        PVector globalVertexPos = new PVector(); 
-                        matrix.mult(mesh.getChild(polygon).getVertex(vertex).copy(),globalVertexPos);
-                        
-                        PVector rangeVector = globalVertexPos.copy().sub(colliderPos1);
-                        float projectedValue = rangeVector.dot(normals.get(i));
-                        if(projectedValue<minProjection2) minProjection2 = projectedValue;
-                    }
-                }
                 
-                if(projectedDifference - abs(maxProjection1) - abs(minProjection2) >0){
+                //First mesh range calculation
+                float maxProjection = biggestProjection(owner,normals.get(i));
+                //Second mesh range calculation
+                float minProjection =smallestProjection(col.owner,normals.get(i));
+                
+                if(projectedDifference - abs(maxProjection) - abs(minProjection) >0){
+                    return null;
+                }
+            }
+            
+            ArrayList<PVector> normalsOther = owner.getNormals();
+            for(int i=0; i<normalsOther.size(); i++){
+                float projectedDifference = differenceVector.dot(normalsOther.get(i));
+                
+                //First mesh range calculation
+                float maxProjection = biggestProjection(col.owner,normalsOther.get(i));
+                //Second mesh range calculation
+                float minProjection =smallestProjection(owner,normalsOther.get(i));
+                
+                if(projectedDifference - abs(maxProjection) - abs(minProjection) >0){
                     return null;
                 }
             }
@@ -62,6 +50,70 @@ class ColliderSat extends Collider{
         collisionsCount++;
         return sparationColisionInfo(this,col);
     }
+
+
+    boolean checkSatCollision(ArrayList<PVector> normals, ColliderSat normalOwner, ColliderSat other){
+        PVector colliderPos1 =normalOwner.owner.position.copy();   
+        PVector colliderPos2 = other.owner.position.copy();      
+        PVector differenceVector= colliderPos2.sub(colliderPos1);
+
+        for(int i=0; i<normals.size(); i++){
+            float projectedDifference = differenceVector.dot(normals.get(i));
+
+
+        }
+        return false;
+    }
+
+    float biggestProjection(Object objRef, PVector normal){
+        float maxProjection =0;
+
+        PShape mesh = objRef.getMesh();
+
+        for(int i=0; i< mesh.getChildCount(); i++){
+            PShape polygon = mesh.getChild(i);
+
+            for( int j = 0; j<polygon.getVertexCount(); j++){
+                PMatrix3D matrix = objRef.GetMatrix();
+
+                PVector globalVertexPos = new PVector(); 
+                matrix.mult(polygon.getVertex(j).copy(),globalVertexPos);
+
+                PVector rangeVector = globalVertexPos.copy().sub(objRef.position);
+                float projectedValue = rangeVector.dot(normal);
+                if(projectedValue>maxProjection) maxProjection = projectedValue;
+            }
+        }
+        return maxProjection;
+    }
+
+    float smallestProjection(Object objRef, PVector normal){
+        float maxProjection =0;
+
+        PShape mesh = objRef.getMesh();
+
+        for(int i=0; i< mesh.getChildCount(); i++){
+            PShape polygon = mesh.getChild(i);
+
+            for( int j = 0; j<polygon.getVertexCount(); j++){
+                PMatrix3D matrix = objRef.GetMatrix();
+
+                PVector globalVertexPos = new PVector(); 
+                matrix.mult(polygon.getVertex(j).copy(),globalVertexPos);
+
+                PVector rangeVector = globalVertexPos.copy().sub(objRef.position);
+                float projectedValue = rangeVector.dot(normal);
+                if(projectedValue<maxProjection) maxProjection = projectedValue;
+            }
+        }
+        return maxProjection;
+    }
+
+
+    
+
+
+
     CollisionInfo sparationColisionInfo(Collider col1, Collider col2){
         PVector colliderPos1 = col1.owner.position.copy();
         PVector colliderPos2 = col2.owner.position.copy();      
