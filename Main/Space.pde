@@ -1,5 +1,5 @@
 class Space{
-    int depth=2;
+    int depth=1;
     
 
     PVector position;

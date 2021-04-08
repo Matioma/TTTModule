@@ -1,8 +1,8 @@
 class SimulationOctreeSat extends Simulation{
     Space spaceTreeRoot;
-    float spaceSizeX =20;
-    float spaceSizeY =20;
-    float spaceSizeZ =20;
+    float spaceSizeX =200;
+    float spaceSizeY =200;
+    float spaceSizeZ =200;
 
 
 
