@@ -10,11 +10,26 @@ class Space{
 
     ArrayList<Object> objectsInSpace = new ArrayList();
 
+    ArrayList<Space> getLeafNodes(){
+        ArrayList<Space> nodes = new ArrayList();
+        if(subSpaces.size()==0){
+            nodes.add(this);
+            return nodes;
+        }
+
+        for(Space space: subSpaces){
+            nodes.addAll(space.getLeafNodes());
+        }
+        return nodes;
+    }
+
+
     Space(PVector pPosition, float pSizeX, float pSizeY, float pSizeZ){
         position =pPosition;
         sizeX = pSizeX;
         sizeY = pSizeY;
         sizeZ = pSizeZ;
+       
     }
 
     void Draw(){
@@ -25,7 +40,7 @@ class Space{
             }
             return;
         }
-        println("Draw the box",sizeX,sizeY,sizeZ);
+        println("WTF");
         pushMatrix();
             translate(position.x,position.y,position.z);
             noFill();
@@ -34,6 +49,25 @@ class Space{
         popMatrix();
     }
     
+    void FindObjectsInSpace(){
+        if(parent ==null){
+            for(int i=0; i< objects.size();i++){
+                BoxCollider col = (BoxCollider)objects.get(i).getCollider(CollidersTypes.Box);
+                if(isBoxInSpace(col)){
+                    objectsInSpace.add(col.owner);
+                }
+            }
+        }
+        if(parent !=null){
+            for(int i=0; i< parent.objectsInSpace.size(); i++){
+                BoxCollider col = (BoxCollider)parent.objectsInSpace.get(i).getCollider(CollidersTypes.Box);
+                if(isBoxInSpace(col)){
+                    objectsInSpace.add(col.owner);
+                }
+            }
+        }
+    }
+
     
     
     boolean isBoxInSpace(BoxCollider collider){
@@ -42,17 +76,10 @@ class Space{
         PVector differenceVector = colliderPos.sub(position);
 
 
-
-        //PVector colliderPos1 = owner.position.copy();
-        //PVector colliderPos2 = col.owner.position.copy();
-        //PVector differenceVector= colliderPos2.sub(colliderPos1);
-        
-        // if(abs(differenceVector.x) >(XSize/2+collider2.XSize/2)) return null;
-        // if(abs(differenceVector.y) >(YSize/2+collider2.YSize/2)) return null;
-        // if(abs(differenceVector.z) >(ZSize/2+collider2.ZSize/2)) return null;
-
-
-        return false;
+        if(abs(differenceVector.x) >(sizeX/2+collider.XSize/2)) return false;
+        if(abs(differenceVector.y) >(sizeY/2+collider.YSize/2)) return false;
+        if(abs(differenceVector.z) >(sizeZ/2+collider.ZSize/2)) return false;
+        return true;
     }
 
 

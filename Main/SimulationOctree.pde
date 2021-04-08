@@ -1,5 +1,5 @@
 class SimulationOctreeSat extends Simulation{
-    Space spaceTree;
+    Space spaceTreeRoot;
     float spaceSizeX =widthArea*2;
     float spaceSizeY =heightArea*2;
     float spaceSizeZ =depthArea*2;
@@ -9,7 +9,7 @@ class SimulationOctreeSat extends Simulation{
 
     SimulationOctreeSat(){
         super();
-        spaceTree = GetTheSpace();
+        spaceTreeRoot = GetTheSpace();
     }
 
     //Get the space bounding all the meshes
@@ -22,7 +22,34 @@ class SimulationOctreeSat extends Simulation{
 
     public void Update(){
         super.Update();
-        spaceTree.Draw();
+        spaceTreeRoot.Draw();
+    }
+
+
+    void DetectCollision(){
+        ArrayList<Space> leefSpaces = spaceTreeRoot.getLeafNodes();
+        println(leefSpaces.size(),leefSpaces.get(0).objectsInSpace.size());
+
+        for( Space space:leefSpaces){
+            for(int i=0; i<space.objectsInSpace.size();i++){
+                for(int j=i+1; j<space.objectsInSpace.size();j++){
+                    CollisionInfo colInfo =collisionDetectionMethod(space.objectsInSpace.get(i),space.objectsInSpace.get(j));
+                    if(colInfo!=null){
+                        ResolveCollision(colInfo);
+                    }
+                }
+            }
+        }
+
+
+        // for(int i=0; i< objects.size()-1;i++){
+        //     for(int j=i+1; j<objects.size(); j++){
+        //         CollisionInfo colInfo =collisionDetectionMethod(objects.get(i),objects.get(j));
+        //         if(colInfo!=null){
+        //         ResolveCollision(colInfo);
+        //         }
+        //     }
+        // }
     }
 
 
@@ -30,10 +57,6 @@ class SimulationOctreeSat extends Simulation{
 
       Object obj = new Object();
       obj.AddMesh(loadShape("Resources/Cube.obj"));
-      //obj.AddMesh(loadShape("Resources/Sphere.obj"));
-      //obj.AddMesh(loadShape("Resources/Pyramid.obj"));
-      
-      //obj.AddCollider(new BoxCollider(obj));
       
       obj.AddNewCollider(new BoxCollider(obj));
       obj.AddNewCollider(new ColliderSat(obj));
@@ -43,6 +66,7 @@ class SimulationOctreeSat extends Simulation{
 
 
     CollisionInfo  collisionDetectionMethod(Object firstObject, Object secondObject){
+     
         // BoxCollider box= (BoxCollider)firstObject.getCollider(CollidersTypes.Box);
         // BoxCollider box2 = (BoxCollider)secondObject.getCollider(CollidersTypes.Box);
 
@@ -53,7 +77,6 @@ class SimulationOctreeSat extends Simulation{
 
 
         return sat1.checkCollision(sat2);
-        //return firstObject.collider.checkCollision(secondObject.collider);
     }
 
 }
