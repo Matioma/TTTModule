@@ -26,7 +26,8 @@ public static double bytesToMegabytes(long bytes) {
 Simulation simulation;
 
 void setup() {
-  size(512, 512, P3D);
+  size(1024, 1024, P3D);
+  frameRate(120);
   
   simulation  = new SimulationAlignedBox();
 

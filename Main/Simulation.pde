@@ -1,6 +1,6 @@
 
 abstract class Simulation{
-  final int numberOfObjects =100;
+  final int numberOfObjects =10;
   final int widthArea=2;
   final int heightArea=2;
   final int depthArea=2;

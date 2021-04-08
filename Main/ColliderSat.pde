@@ -13,42 +13,45 @@ class ColliderSat extends Collider{
     }
 
     CollisionInfo checkCollision(Collider col){
-        
         if(col instanceof ColliderSat){
             PVector colliderPos1 = owner.position.copy();   
             PVector colliderPos2 = col.owner.position.copy();      
             PVector differenceVector= colliderPos2.sub(colliderPos1);
 
-            ArrayList<PVector> normals = owner.getNormals();
-            for(int i=0; i<normals.size(); i++){
-                float projectedDifference = differenceVector.dot(normals.get(i));
-                
-                //First mesh range calculation
-                float maxProjection = biggestProjection(owner,normals.get(i));
-                //Second mesh range calculation
-                float minProjection =smallestProjection(col.owner,normals.get(i));
-                
-                if(projectedDifference - abs(maxProjection) - abs(minProjection) >0){
-                    return null;
-                }
+            ArrayList<PVector> meshNormals1 = owner.getNormals();
+            ArrayList<PVector> meshNormals2 = col.owner.getNormals();
+
+            //Check first mesh normals
+            for(int i=0;i< meshNormals1.size(); i++){
+                 if(noOverlapOnNormal(meshNormals1.get(i),owner, col.owner,differenceVector)) return null;
             }
-            
-            ArrayList<PVector> normalsOther = owner.getNormals();
-            for(int i=0; i<normalsOther.size(); i++){
-                float projectedDifference = differenceVector.dot(normalsOther.get(i));
-                
-                //First mesh range calculation
-                float maxProjection = biggestProjection(col.owner,normalsOther.get(i));
-                //Second mesh range calculation
-                float minProjection =smallestProjection(owner,normalsOther.get(i));
-                
-                if(projectedDifference - abs(maxProjection) - abs(minProjection) >0){
-                    return null;
+            //Check second mesh normals 
+            for(int j=0; j<meshNormals2.size(); j++){
+                if(noOverlapOnNormal(meshNormals2.get(j),col.owner, owner,differenceVector)) return null;
+            }
+
+            //Check cross product collisions
+            for(int i=0;i< meshNormals1.size(); i++){
+                for(int j=0; j<meshNormals2.size(); j++){
+                    if(noOverlapOnNormal(meshNormals2.get(j).cross(meshNormals1.get(i)),col.owner, owner,differenceVector)) return null;
                 }
             }
         }
         collisionsCount++;
         return sparationColisionInfo(this,col);
+    }
+
+
+    boolean noOverlapOnNormal(PVector normal, Object owner, Object other, PVector differenceVector){
+        float projectedDifference = differenceVector.dot(normal);
+        
+        float maxProjection = biggestProjection(owner,normal);
+        float minProjection =smallestProjection(other,normal);
+
+        if(projectedDifference - abs(maxProjection) - abs(minProjection) >0){
+            return true;
+        }
+        return false;
     }
 
 
@@ -59,7 +62,6 @@ class ColliderSat extends Collider{
 
         for(int i=0; i<normals.size(); i++){
             float projectedDifference = differenceVector.dot(normals.get(i));
-
 
         }
         return false;
