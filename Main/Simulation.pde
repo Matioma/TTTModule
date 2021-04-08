@@ -38,13 +38,20 @@ abstract class Simulation{
   void DetectCollision(){
     for(int i=0; i< objects.size()-1;i++){
       for(int j=i+1; j<objects.size(); j++){
-         CollisionInfo colInfo =  objects.get(i).collider.checkCollision(objects.get(j).collider);
-         if(colInfo!=null){
-           ResolveCollision(colInfo);
-         }
+        CollisionInfo colInfo =collisionDetectionMethod(objects.get(i),objects.get(j));
+         //CollisionInfo colInfo =  objects.get(i).collider.checkCollision(objects.get(j).collider);
+        if(colInfo!=null){
+          ResolveCollision(colInfo);
+        }
       }
     }
   }
+
+  protected CollisionInfo  collisionDetectionMethod(Object firstObject, Object secondObject){
+    return firstObject.collider.checkCollision(secondObject.collider);
+  }
+
+
   
   void ResolveCollision(CollisionInfo collision){
       collision.col1.owner.velocity.sub(collision.normal.mult(0.1));

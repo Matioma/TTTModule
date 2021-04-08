@@ -54,4 +54,5 @@ abstract class Collider{
   
   abstract void Draw();
   abstract CollisionInfo checkCollision(Collider col);
+
 }

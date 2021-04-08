@@ -6,6 +6,12 @@ class Object{
   PShape meshToDraw;
   public PShape getMesh(){return meshToDraw;};
   Collider collider;
+
+  ArrayList<Collider> colliders = new ArrayList<Collider>();
+  void AddNewCollider(Collider col){
+    colliders.add(col);
+  }
+
   
   PVector position = new PVector(0,0,0);
   public PVector getPosition(){return position.copy();};
