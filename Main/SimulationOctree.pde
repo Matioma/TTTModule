@@ -39,6 +39,8 @@ class SimulationOctreeSat extends Simulation{
         ArrayList<Space> leefSpaces = spaceTreeRoot.getLeafNodes();
         // println(leefSpaces.size(),leefSpaces.get(0).objectsInSpace.size());
 
+        println(leefSpaces.size());
+
         for( Space space:leefSpaces){
             for(int i=0; i<space.objectsInSpace.size();i++){
                 for(int j=i+1; j<space.objectsInSpace.size();j++){

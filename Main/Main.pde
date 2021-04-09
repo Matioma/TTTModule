@@ -33,7 +33,7 @@ void setup() {
   frameRate(120);
   simulationShape = loadShape("Resources/Cube.obj");
   
-  simulation = new SimulationOctreeBoxSat(2);
+  simulation = new SimulationOctreeBoxSat(4);
   //simulation = new SimulationOctreeSat(1);
   //simulation  = new SimulationBoxSat();
   //simulation  = new SimulationSat();
@@ -42,7 +42,7 @@ void setup() {
   // simulation = new SimulationSat();
 
   cam = new PeasyCam(this, 1000);
-  cam.setMinimumDistance(50);
+  cam.setMinimumDistance(10);
   cam.setMaximumDistance(5000);
   
   lastTime=millis();

@@ -31,11 +31,11 @@ class Space{
         sizeZ = pSizeZ;
         parent =pParent;
         FindObjectsInSpace();
-    
     }
 
     void Split(int number){
         if(number==0) return;
+        if(objectsInSpace.size()<=0) return;
 
         PVector minVector = position.copy().sub(new PVector(sizeX/2, sizeY/2, sizeZ/2));
         PVector maxVector = position.copy().sub(new PVector(sizeX/2, sizeY/2, sizeZ/2));
@@ -82,7 +82,9 @@ class Space{
     ArrayList<Space> getLeafNodes(){
         ArrayList<Space> nodes = new ArrayList();
         if(subSpaces.size()==0){
-            nodes.add(this);
+            if(objectsInSpace.size()>0){
+                nodes.add(this);
+            }
             return nodes;
         }
 
