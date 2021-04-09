@@ -12,12 +12,16 @@ class Object{
 
   PShape meshToDraw;
   public PShape getMesh(){return meshToDraw;};
+  ArrayList<PVector> normals;
+
   Collider collider;
 
   ArrayList<Collider> colliders = new ArrayList<Collider>();
   void AddNewCollider(Collider col){
     colliders.add(col);
   }
+
+
 
 
 
@@ -99,32 +103,42 @@ class Object{
   ArrayList<PVector> getNormals(){
     if(meshToDraw == null) return null;
     if(meshToDraw.getChildCount() ==0) return null;
-    
-    ArrayList<PVector> normals = new ArrayList<PVector>();
-    PMatrix3D matrix =  GetMatrix();
-    
-    for(int i=0; i< meshToDraw.getChildCount(); i++){
-      PVector normal = new PVector();
-      PShape poligon =meshToDraw.getChild(i);
-      if(poligon.getVertexCount()<3){
-        println("not a polygon");
-        continue;
+
+
+
+    if(this.normals ==null){
+      ArrayList<PVector> normals = new ArrayList<PVector>();
+      PMatrix3D matrix =  GetMatrix();
+      
+
+      for(int i=0; i< meshToDraw.getChildCount(); i++){
+        PVector normal = new PVector();
+        PShape poligon =meshToDraw.getChild(i);
+        if(poligon.getVertexCount()<3){
+          println("not a polygon");
+          continue;
+        }
+
+        PVector p1 = new PVector();
+        matrix.mult(poligon.getVertex(0).copy(),p1);
+        PVector p2 = new PVector();
+        matrix.mult(poligon.getVertex(1).copy(),p2);
+        PVector p3 = new PVector();
+        matrix.mult(poligon.getVertex(2).copy(),p3);
+      
+        PVector edge1 = p2.copy().sub(p1);
+        PVector edge2 = p3.copy().sub(p1);
+
+        normal = edge1.cross(edge2);
+        normals.add(normal);
       }
-
-      PVector p1 = new PVector();
-      matrix.mult(poligon.getVertex(0).copy(),p1);
-      PVector p2 = new PVector();
-      matrix.mult(poligon.getVertex(1).copy(),p2);
-      PVector p3 = new PVector();
-      matrix.mult(poligon.getVertex(2).copy(),p3);
+      this.normals = normals;
+    }    
     
-      PVector edge1 = p2.copy().sub(p1);
-      PVector edge2 = p3.copy().sub(p1);
 
-      normal = edge1.cross(edge2);
-      normals.add(normal);
-    }
-    return normals;
+
+
+    return this.normals;
   }
 
 

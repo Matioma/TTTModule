@@ -14,6 +14,9 @@ static int collisionsCount =0;
 
 
 
+PShape simulationShape ;
+
+
 float lastTime;
 float deltaTime =0;
 long memoryUsed=0;
@@ -28,11 +31,15 @@ Simulation simulation;
 void setup() {
   size(1024, 1024, P3D);
   frameRate(120);
+  simulationShape = loadShape("Resources/Cube.obj");
   
   simulation = new SimulationOctreeBoxSat();
   //simulation = new SimulationOctreeSat();
-  // simulation  = new SimulationBoxSat();
+  //simulation  = new SimulationBoxSat();
   //simulation  = new SimulationSat();
+  //simulation  = new SimulationSphere(); 
+  //simulation = new SimulationAlignedBox();
+  // simulation = new SimulationSat();
 
   cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(50);

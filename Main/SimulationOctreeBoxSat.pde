@@ -2,7 +2,7 @@ class SimulationOctreeBoxSat extends SimulationOctreeSat{
     void AddObjectToScene(PVector position){
 
         Object obj = new Object();
-        obj.AddMesh(loadShape("Resources/Cube.obj"));
+        obj.AddMesh(simulationShape);
         
         obj.AddNewCollider(new BoxCollider(obj));
         obj.AddNewCollider(new ColliderSat(obj));
