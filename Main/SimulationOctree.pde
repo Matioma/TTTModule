@@ -4,23 +4,32 @@ class SimulationOctreeSat extends Simulation{
     float spaceSizeY =200;
     float spaceSizeZ =200;
 
-
-
+    int depth=0;
 
     SimulationOctreeSat(){
         super();
+    }
+
+
+    SimulationOctreeSat(int depth){
+        super();
+        this.depth = depth;
         //spaceTreeRoot = GetTheSpace();
     }
 
+    
+
+
     //Get the space bounding all the meshes
     Space GetTheSpace(){
-        return new Space(new PVector(),spaceSizeX,spaceSizeY,spaceSizeZ);
+        return new Space(new PVector(),spaceSizeX,spaceSizeY,spaceSizeZ,depth);
     }
 
 
 
 
     public void Update(){
+        if()
         spaceTreeRoot = GetTheSpace();
         super.Update();
         spaceTreeRoot.Draw();

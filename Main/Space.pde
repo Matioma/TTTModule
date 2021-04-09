@@ -14,11 +14,12 @@ class Space{
     ArrayList<Object> objectsInSpace = new ArrayList();
 
     //Creating the root space
-    Space(PVector pPosition, float pSizeX, float pSizeY, float pSizeZ){
+    Space(PVector pPosition, float pSizeX, float pSizeY, float pSizeZ, int pDepth){
         position =pPosition;
         sizeX = pSizeX;
         sizeY = pSizeY;
         sizeZ = pSizeZ;
+        depth = pDepth;
         FindObjectsInSpace();
         Split(depth);
     }
@@ -30,6 +31,7 @@ class Space{
         sizeZ = pSizeZ;
         parent =pParent;
         FindObjectsInSpace();
+    
     }
 
     void Split(int number){
