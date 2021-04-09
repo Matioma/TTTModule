@@ -36,7 +36,7 @@ class ColliderSat extends Collider{
                 }
             }
         }
-        collisionsCount++;
+        // collisionsCount++;
         return sparationColisionInfo(this,col);
     }
 

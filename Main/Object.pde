@@ -104,8 +104,6 @@ class Object{
     if(meshToDraw == null) return null;
     if(meshToDraw.getChildCount() ==0) return null;
 
-
-
     if(this.normals ==null){
       ArrayList<PVector> normals = new ArrayList<PVector>();
       PMatrix3D matrix =  GetMatrix();

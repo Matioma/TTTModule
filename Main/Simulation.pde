@@ -51,6 +51,7 @@ abstract class Simulation{
   }
   
   void ResolveCollision(CollisionInfo collision){
+      collisionsCount++;
       collision.col1.owner.velocity.sub(collision.normal.mult(0.1));
       collision.col1.owner.Update();
       collision.col2.owner.velocity.add(collision.normal.mult(0.1));

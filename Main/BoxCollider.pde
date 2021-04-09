@@ -23,23 +23,6 @@ class BoxCollider extends Collider{
       popMatrix();
   }
   public CollisionInfo checkCollision(Collider col){
-    if(col instanceof SphereCollider){
-      SphereCollider collider2= (SphereCollider)col; 
-      
-      PVector colliderPos1 = owner.position.copy();
-      PVector colliderPos2 = col.owner.position.copy();
-           
-      PVector differenceVector= colliderPos2.sub(colliderPos1);
-      //float collider1Radius = radius;
-      //float collider2Radius = collider2.GetRadius();
-           
-      //if(differenceVector.mag()<= collider1Radius+collider2Radius){
-      //   collisionsCount++;
-      //   differenceVector.normalize().mult(1);
-      //   return new CollisionInfo(differenceVector,this,collider2);
-      //}
-    }
-    
     if(col instanceof BoxCollider){
       BoxCollider collider2 = (BoxCollider)col;
       
@@ -51,7 +34,7 @@ class BoxCollider extends Collider{
       if(abs(differenceVector.y) >(YSize/2+collider2.YSize/2)) return null;
       if(abs(differenceVector.z) >(ZSize/2+collider2.ZSize/2)) return null;
       
-      collisionsCount++;
+      
       differenceVector.normalize().mult(1);
       return new CollisionInfo(differenceVector,this,collider2);
     }

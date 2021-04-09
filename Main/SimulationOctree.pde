@@ -42,6 +42,7 @@ class SimulationOctreeSat extends Simulation{
         println(leefSpaces.size());
 
         for( Space space:leefSpaces){
+            println(space.objectsInSpace.size());
             for(int i=0; i<space.objectsInSpace.size();i++){
                 for(int j=i+1; j<space.objectsInSpace.size();j++){
                     CollisionInfo colInfo =collisionDetectionMethod(space.objectsInSpace.get(i),space.objectsInSpace.get(j));

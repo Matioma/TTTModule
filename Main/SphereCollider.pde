@@ -36,7 +36,7 @@ class SphereCollider extends Collider{
       float collider2Radius = collider2.radius;
            
       if(differenceVector.mag()<= collider1Radius+collider2Radius){
-         collisionsCount++;
+        //  collisionsCount++;
          differenceVector.normalize().mult(1);
          return new CollisionInfo(differenceVector,this,collider2);
       }
