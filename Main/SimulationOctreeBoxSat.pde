@@ -1,4 +1,8 @@
 class SimulationOctreeBoxSat extends SimulationOctreeSat{
+    SimulationOctreeBoxSat(int depth){
+        super(depth);
+    }
+
     void AddObjectToScene(PVector position){
 
         Object obj = new Object();

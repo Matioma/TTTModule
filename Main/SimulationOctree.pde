@@ -29,7 +29,6 @@ class SimulationOctreeSat extends Simulation{
 
 
     public void Update(){
-        if()
         spaceTreeRoot = GetTheSpace();
         super.Update();
         spaceTreeRoot.Draw();

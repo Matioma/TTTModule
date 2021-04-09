@@ -29,12 +29,12 @@ public static double bytesToMegabytes(long bytes) {
 Simulation simulation;
 
 void setup() {
-  size(1024, 1024, P3D);
+  size(1024, 1024, P3D );
   frameRate(120);
   simulationShape = loadShape("Resources/Cube.obj");
   
-  //simulation = new SimulationOctreeBoxSat();
-  simulation = new SimulationOctreeSat(1);
+  simulation = new SimulationOctreeBoxSat(2);
+  //simulation = new SimulationOctreeSat(1);
   //simulation  = new SimulationBoxSat();
   //simulation  = new SimulationSat();
   // simulation  = new SimulationSphere(); 
