@@ -22,7 +22,40 @@ class SimulationOctreeSat extends Simulation{
 
     //Get the space bounding all the meshes
     Space GetTheSpace(){
-        return new Space(new PVector(),spaceSizeX,spaceSizeY,spaceSizeZ,depth);
+        PVector minVector = ((BoxCollider)objects.get(0).getCollider(CollidersTypes.Box)).getMin();
+        PVector maxVector = ((BoxCollider)objects.get(0).getCollider(CollidersTypes.Box)).getMax();
+
+        for(int i =1; i<objects.size(); i++){
+            BoxCollider boxCollider =(BoxCollider)objects.get(i).getCollider(CollidersTypes.Box);
+
+            println(boxCollider.owner.getPosition());
+            
+            PVector objMinVector = boxCollider.getMin();
+            PVector objMaxVector = boxCollider.getMax();
+
+            println(boxCollider.owner.getPosition(), objMinVector, objMaxVector);
+
+
+            if(objMinVector.x < minVector.x) minVector.x = objMinVector.x;
+            if(objMinVector.y < minVector.y) minVector.y = objMinVector.y;
+            if(objMinVector.z < minVector.z) minVector.z = objMinVector.z;
+            
+
+            if(objMaxVector.x > maxVector.x) maxVector.x = objMaxVector.x;
+            if(objMaxVector.y > maxVector.y) maxVector.y = objMaxVector.y;
+            if(objMaxVector.z > maxVector.z) maxVector.z = objMaxVector.z;
+        }
+
+        
+        float spaceWidth =abs(maxVector.x-minVector.x);
+        float spaceHeight=abs(maxVector.y-minVector.y);
+        float spaceDepth=abs(maxVector.z-minVector.z);
+
+        PVector spaceCenter = minVector.add(new PVector(spaceWidth/2,spaceHeight/2,spaceDepth/2));
+
+        
+        return new Space(spaceCenter,spaceWidth,spaceHeight,spaceDepth,depth);
+        //return new Space(new PVector(),spaceSizeX,spaceSizeY,spaceSizeZ,depth);
     }
 
 
@@ -37,12 +70,12 @@ class SimulationOctreeSat extends Simulation{
 
     void DetectCollision(){
         ArrayList<Space> leefSpaces = spaceTreeRoot.getLeafNodes();
-        // println(leefSpaces.size(),leefSpaces.get(0).objectsInSpace.size());
+       
 
-        println(leefSpaces.size());
+        // println(leefSpaces.size());
 
         for( Space space:leefSpaces){
-            println(space.objectsInSpace.size());
+            // println(space.objectsInSpace.size());
             for(int i=0; i<space.objectsInSpace.size();i++){
                 for(int j=i+1; j<space.objectsInSpace.size();j++){
                     CollisionInfo colInfo =collisionDetectionMethod(space.objectsInSpace.get(i),space.objectsInSpace.get(j));
@@ -52,16 +85,6 @@ class SimulationOctreeSat extends Simulation{
                 }
             }
         }
-
-
-        // for(int i=0; i< objects.size()-1;i++){
-        //     for(int j=i+1; j<objects.size(); j++){
-        //         CollisionInfo colInfo =collisionDetectionMethod(objects.get(i),objects.get(j));
-        //         if(colInfo!=null){
-        //         ResolveCollision(colInfo);
-        //         }
-        //     }
-        // }
     }
 
 

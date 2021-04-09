@@ -2,14 +2,25 @@ class BoxCollider extends Collider{
   float XSize = 1;
   float YSize = 1;
   float ZSize = 1;
-  
-  
+
+  PVector min;
+  PVector max;
+  public PVector getMin(){
+    return owner.getPosition().copy().add(new PVector(-XSize/2, -YSize/2, -ZSize/2));
+  }
+  public PVector getMax(){
+     return owner.getPosition().copy().add(new PVector(XSize/2, YSize/2, ZSize/2));
+  }
+
+
   BoxCollider(Object owner){
     super(owner);
     BoundingBox boundingBox = getBoundingBox(owner.getMesh());
     XSize = boundingBox.xSize;
     YSize = boundingBox.ySize;
     ZSize = boundingBox.zSize;
+    //min = owner.getPosition().copy().add(new PVector(-XSize/2, -YSize/2, -ZSize/2));
+    //max = owner.getPosition().copy().add(new PVector(XSize/2, YSize/2, ZSize/2));
   }
   
   void Draw(){
