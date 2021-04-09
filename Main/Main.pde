@@ -29,7 +29,8 @@ void setup() {
   size(1024, 1024, P3D);
   frameRate(120);
   
-  simulation = new SimulationOctreeSat();
+  simulation = new SimulationOctreeBoxSat();
+  //simulation = new SimulationOctreeSat();
   // simulation  = new SimulationBoxSat();
   //simulation  = new SimulationSat();
 
