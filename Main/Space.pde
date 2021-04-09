@@ -1,7 +1,6 @@
 class Space{
     int depth=2;
     
-
     PVector position;
     float sizeX;
     float sizeY;
@@ -9,7 +8,6 @@ class Space{
 
     Space parent;
     ArrayList<Space> subSpaces = new ArrayList();
-
 
     ArrayList<Object> objectsInSpace = new ArrayList();
 
@@ -72,7 +70,6 @@ class Space{
         Space subSpace5= new Space(positionSubSpace5,subspaceXSize,subspaceYSize,subspaceZSize, this);
         subSpaces.add(subSpace5);
         
-
         for(Space space: subSpaces){
             space.Split(number-1);
         }
@@ -131,8 +128,6 @@ class Space{
             }
         }
     }
-
-    
     
     boolean isBoxInSpace(BoxCollider collider){
         PVector colliderPos = collider.owner.position.copy();

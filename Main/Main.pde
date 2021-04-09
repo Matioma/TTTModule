@@ -33,8 +33,8 @@ void setup() {
   frameRate(120);
   simulationShape = loadShape("Resources/Cube.obj");
   
-  simulation = new SimulationOctreeBoxSat(2);
-  //simulation = new SimulationOctreeSat(1);
+  // simulation = new SimulationOctreeBoxSat(4);
+  simulation = new SimulationOctree(1);
   //simulation  = new SimulationBoxSat();
   //simulation  = new SimulationSat();
   //simulation  = new SimulationSphere(); 

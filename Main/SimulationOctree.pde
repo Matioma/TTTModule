@@ -1,4 +1,4 @@
-class SimulationOctreeSat extends Simulation{
+abstract class SimulationOctree extends Simulation{
     Space spaceTreeRoot;
     float spaceSizeX =200;
     float spaceSizeY =200;
@@ -6,15 +6,14 @@ class SimulationOctreeSat extends Simulation{
 
     int depth=0;
 
-    SimulationOctreeSat(){
+    SimulationOctree(){
         super();
     }
 
 
-    SimulationOctreeSat(int depth){
+    SimulationOctree(int depth){
         super();
         this.depth = depth;
-        //spaceTreeRoot = GetTheSpace();
     }
 
     
@@ -27,35 +26,24 @@ class SimulationOctreeSat extends Simulation{
 
         for(int i =1; i<objects.size(); i++){
             BoxCollider boxCollider =(BoxCollider)objects.get(i).getCollider(CollidersTypes.Box);
-
-            println(boxCollider.owner.getPosition());
-            
             PVector objMinVector = boxCollider.getMin();
             PVector objMaxVector = boxCollider.getMax();
-
-            println(boxCollider.owner.getPosition(), objMinVector, objMaxVector);
-
 
             if(objMinVector.x < minVector.x) minVector.x = objMinVector.x;
             if(objMinVector.y < minVector.y) minVector.y = objMinVector.y;
             if(objMinVector.z < minVector.z) minVector.z = objMinVector.z;
             
-
             if(objMaxVector.x > maxVector.x) maxVector.x = objMaxVector.x;
             if(objMaxVector.y > maxVector.y) maxVector.y = objMaxVector.y;
             if(objMaxVector.z > maxVector.z) maxVector.z = objMaxVector.z;
         }
-
         
         float spaceWidth =abs(maxVector.x-minVector.x);
         float spaceHeight=abs(maxVector.y-minVector.y);
         float spaceDepth=abs(maxVector.z-minVector.z);
 
         PVector spaceCenter = minVector.add(new PVector(spaceWidth/2,spaceHeight/2,spaceDepth/2));
-
-        
         return new Space(spaceCenter,spaceWidth,spaceHeight,spaceDepth,depth);
-        //return new Space(new PVector(),spaceSizeX,spaceSizeY,spaceSizeZ,depth);
     }
 
 
@@ -101,12 +89,6 @@ class SimulationOctreeSat extends Simulation{
 
 
     CollisionInfo  collisionDetectionMethod(Object firstObject, Object secondObject){
-     
-        // BoxCollider box= (BoxCollider)firstObject.getCollider(CollidersTypes.Box);
-        // BoxCollider box2 = (BoxCollider)secondObject.getCollider(CollidersTypes.Box);
-
-        // if(box.checkCollision(box2) ==null) return null;
-
         ColliderSat sat1 =(ColliderSat)firstObject.getCollider(CollidersTypes.Sat);
         ColliderSat sat2 =(ColliderSat)secondObject.getCollider(CollidersTypes.Sat);
 
