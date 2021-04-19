@@ -1,5 +1,6 @@
 class SimulationOctreeSat extends SimulationOctree{
-    SimulationOctreeBoxSat(int depth){
+
+    SimulationOctreeSat(int depth){
         super(depth);
     }
 
@@ -16,7 +17,6 @@ class SimulationOctreeSat extends SimulationOctree{
     CollisionInfo  collisionDetectionMethod(Object firstObject, Object secondObject){
         ColliderSat sat1 =(ColliderSat)firstObject.getCollider(CollidersTypes.Sat);
         ColliderSat sat2 =(ColliderSat)secondObject.getCollider(CollidersTypes.Sat);
-
 
         return sat1.checkCollision(sat2);
     }
