@@ -1,9 +1,9 @@
 
 abstract class Simulation{
-  final int numberOfObjects =440;
-  final int widthArea=200;
-  final int heightArea=200;
-  final int depthArea=200;
+  protected final int numberOfObjects =770;
+  protected final int widthArea=800;
+  final int heightArea=800;
+  final int depthArea=800;
 
   Simulation(){
     StartSimulation();
@@ -26,6 +26,7 @@ abstract class Simulation{
         float y = random(-heightArea/2,heightArea/2);
         float z = random(-depthArea/2,depthArea/2);
        AddObjectToScene(new PVector(x,y,z));
+       println(i);
     }
     //Compute memory usage
     Runtime runtime = Runtime.getRuntime();

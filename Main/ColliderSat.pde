@@ -36,11 +36,8 @@ class ColliderSat extends Collider{
                 }
             }
         }
-        // collisionsCount++;
         return sparationColisionInfo(this,col);
     }
-
-
 
     boolean noOverlapOnNormal(PVector normal, Object owner, Object other, PVector differenceVector){
         float projectedDifference = differenceVector.dot(normal);
@@ -123,7 +120,4 @@ class ColliderSat extends Collider{
         differenceVector.normalize();
         return new CollisionInfo(differenceVector,col1,col2);
     }
-
-    
-
 }

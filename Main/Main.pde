@@ -57,17 +57,26 @@ void setup() {
   frameRate(240);
   simulationShape = loadShape("Resources/Cube.obj");
   
-  simulation  = new SimulationSphere(); 
-
   for(int i=0;i<avarageFramesCount; i++){
     lastFrames.append(0);
   }
-  
+
+  //simulation  = new SimulationSphere(); 
   //simulation = new SimulationAlignedBox();
+  // simulation = new SimulationSat();
+  
+  // simulation = new SimulationOctreeBox(3);
+
+
   //simulation  = new SimulationBoxSat();
 
-  //simulation = new SimulationOctreeSat(1);
-  //simulation = new SimulationOctreeBoxSat(4);
+  //simulation = new SimulationOctreeSat(2);
+  // simulation = new SimulationOctreeSat(3);
+  //simulation = new SimulationOctreeSat(4);
+
+  simulation = new SimulationOctreeBoxSat(3);
+  //simulation = new SimulationOctreeBoxSat(3);
+
 
  
  

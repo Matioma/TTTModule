@@ -8,15 +8,20 @@ abstract class SimulationOctree extends Simulation{
 
     SimulationOctree(){
         super();
+        spaceTreeRoot = GetTheSpace();
     }
 
 
     SimulationOctree(int depth){
         super();
         this.depth = depth;
+        spaceTreeRoot = GetSpace(widthArea,heightArea,depthArea);
     }
 
     
+    Space GetSpace(int widthArea, int heightArea,int depthArea){
+         return new Space(new PVector(0,0,0),widthArea,heightArea,depthArea,depth);
+    }
 
 
     //Get the space bounding all the meshes
@@ -50,7 +55,7 @@ abstract class SimulationOctree extends Simulation{
 
 
     public void Update(){
-        spaceTreeRoot = GetTheSpace();
+        ///spaceTreeRoot = GetTheSpace();
         super.Update();
         spaceTreeRoot.Draw();
     }
